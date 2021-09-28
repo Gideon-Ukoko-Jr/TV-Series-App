@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_4sdp">
+
+    <View
+        android:id="@+id/viewSupporter"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@id/imgTVShow"/>
+
+    <View
+        android:id="@+id/viewBackground"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/tv_show_background"
+        android:paddingBottom="@dimen/_10sdp"
+        app:layout_constraintTop_toTopOf="@id/txtName"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/imgTVShow"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:text="Dummy Text"
+        android:textColor="@color/color_text_primary"
+        android:fontFamily="@font/ubuntu_medium"
+        android:includeFontPadding="false"
+        android:paddingTop="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgTVShow"
+        app:layout_constraintTop_toTopOf="@id/imgTVShow"/>
+
+    <TextView
+        android:id="@+id/txtNetwork"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:text="Dummy Network"
+        android:textColor="@color/color_text_other"
+        android:textSize="@dimen/_12ssp"
+        android:fontFamily="@font/ubuntu_regular"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/txtName"
+        app:layout_constraintEnd_toEndOf="@id/txtName"
+        app:layout_constraintStart_toStartOf="@id/txtName"/>
+
+    <TextView
+        android:id="@+id/txtStarted"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:text="Dummy Start Date"
+        android:textColor="@color/color_text_secondary"
+        android:textSize="@dimen/_12ssp"
+        android:fontFamily="@font/ubuntu_regular"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/txtNetwork"
+        app:layout_constraintEnd_toEndOf="@id/txtName"
+        app:layout_constraintStart_toStartOf="@id/txtName"/>
+
+    <TextView
+        android:id="@+id/txtStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:text="Dummy Status"
+        android:textColor="@android:color/holo_green_light"
+        android:textSize="@dimen/_12ssp"
+        android:fontFamily="@font/ubuntu_regular"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/txtStarted"
+        app:layout_constraintEnd_toEndOf="@id/txtName"
+        app:layout_constraintStart_toStartOf="@id/txtName"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
