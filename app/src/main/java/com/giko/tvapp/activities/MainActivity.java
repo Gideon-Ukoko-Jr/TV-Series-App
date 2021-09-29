@@ -1,8 +1,10 @@
-package com.giko.tvapp;
+package com.giko.tvapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.giko.tvapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
