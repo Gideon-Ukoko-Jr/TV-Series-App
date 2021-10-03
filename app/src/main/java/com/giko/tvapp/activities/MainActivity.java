@@ -6,19 +6,21 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.giko.tvapp.R;
 import com.giko.tvapp.adapters.SeriesAdapter;
 import com.giko.tvapp.databinding.ActivityMainBinding;
+import com.giko.tvapp.listeners.SeriesListener;
 import com.giko.tvapp.model.Series;
 import com.giko.tvapp.viewmodels.MostPopularSeriesViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SeriesListener {
 
     private MostPopularSeriesViewModel viewModel;
     private ActivityMainBinding activityMainBinding;
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private void doInit(){
         activityMainBinding.rvTVShows.setHasFixedSize(true);
         viewModel = new ViewModelProvider(this).get(MostPopularSeriesViewModel.class);
-        seriesAdapter = new SeriesAdapter(series);
+        seriesAdapter = new SeriesAdapter(series, this);
         activityMainBinding.rvTVShows.setAdapter(seriesAdapter);
 
         activityMainBinding.rvTVShows.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -88,5 +90,17 @@ public class MainActivity extends AppCompatActivity {
                 activityMainBinding.setIsLoadingMore(true);
             }
         }
+    }
+
+    @Override
+    public void onSeriesClicked(Series series) {
+        Intent intent = new Intent(getApplicationContext(), SeriesDetailsActivity.class);
+        intent.putExtra("id", series.getId());
+        intent.putExtra("name", series.getName());
+        intent.putExtra("startDate", series.getStartDate());
+        intent.putExtra("country", series.getCountry());
+        intent.putExtra("network", series.getNetwork());
+        intent.putExtra("status", series.getStatus());
+        startActivity(intent);
     }
 }

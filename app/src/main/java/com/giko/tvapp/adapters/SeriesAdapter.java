@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.giko.tvapp.R;
 import com.giko.tvapp.databinding.TvShowItemContainerBinding;
+import com.giko.tvapp.listeners.SeriesListener;
 import com.giko.tvapp.model.Series;
 
 import java.util.List;
@@ -19,8 +20,11 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
     private List<Series> series;
     private LayoutInflater layoutInflater;
 
-    public SeriesAdapter(List<Series> series){
+    private SeriesListener seriesListener;
+
+    public SeriesAdapter(List<Series> series, SeriesListener seriesListener){
         this.series = series;
+        this.seriesListener = seriesListener;
     }
 
     @NonNull
@@ -45,7 +49,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
         return series.size();
     }
 
-    static class SeriesViewHolder extends RecyclerView.ViewHolder {
+    class SeriesViewHolder extends RecyclerView.ViewHolder {
 
         private TvShowItemContainerBinding tvShowItemContainerBinding;
 
@@ -57,6 +61,12 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
         public void bindSeries(Series series){
             tvShowItemContainerBinding.setTvSeries(series);
             tvShowItemContainerBinding.executePendingBindings();
+            tvShowItemContainerBinding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    seriesListener.onSeriesClicked(series);
+                }
+            });
         }
     }
 }
