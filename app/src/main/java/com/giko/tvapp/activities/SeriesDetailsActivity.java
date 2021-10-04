@@ -1,11 +1,16 @@
 package com.giko.tvapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.giko.tvapp.R;
@@ -51,5 +56,47 @@ public class SeriesDetailsActivity extends AppCompatActivity {
         activitySeriesDetailsBinding.sliderViewPager.setAdapter(new ImageSliderAdapter(sliderImages));
         activitySeriesDetailsBinding.sliderViewPager.setVisibility(View.VISIBLE);
         activitySeriesDetailsBinding.viewFadingEdge.setVisibility(View.VISIBLE);
+
+        setupSliderIndicators(sliderImages.length);
+        activitySeriesDetailsBinding.sliderViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                setCurrentSliderIndicator(position);
+            }
+        });
+    }
+
+    private void setupSliderIndicators(int count){
+        ImageView[] indicators = new ImageView[count];
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        layoutParams.setMargins(8, 0, 8, 0);
+
+        for (int i = 0; i < indicators.length; i++){
+            indicators[i] = new ImageView(getApplicationContext());
+            indicators[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.background_slider_indicator_inactive));
+            indicators[i].setLayoutParams(layoutParams);
+            activitySeriesDetailsBinding.layoutSliderIndicators.addView(indicators[i]);
+        }
+        activitySeriesDetailsBinding.layoutSliderIndicators.setVisibility(View.VISIBLE);
+        setCurrentSliderIndicator(0);
+    }
+
+    private void setCurrentSliderIndicator(int position){
+        int childCount = activitySeriesDetailsBinding.layoutSliderIndicators.getChildCount();
+        for (int i = 0; i < childCount; i++){
+            ImageView imageView = (ImageView) activitySeriesDetailsBinding.layoutSliderIndicators.getChildAt(i);
+            if (i == position){
+                imageView.setImageDrawable(
+                        ContextCompat.getDrawable(getApplicationContext(), R.drawable.background_slider_indicator_active)
+                );
+            }else {
+                imageView.setImageDrawable(
+                        ContextCompat.getDrawable(getApplicationContext(), R.drawable.background_slider_indicator_inactive)
+                );
+            }
+        }
     }
 }
