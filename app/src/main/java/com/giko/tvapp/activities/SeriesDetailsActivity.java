@@ -5,9 +5,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.giko.tvapp.R;
+import com.giko.tvapp.adapters.ImageSliderAdapter;
 import com.giko.tvapp.databinding.ActivitySeriesDetailsBinding;
 import com.giko.tvapp.viewmodels.SeriesDetailsViewModel;
 
@@ -35,8 +37,19 @@ public class SeriesDetailsActivity extends AppCompatActivity {
         seriesDetailsViewModel.getSeriesDetails(seriesId).observe(
                 this, seriesDetailsResponse -> {
                     activitySeriesDetailsBinding.setIsLoading(false);
-                    Toast.makeText(getApplicationContext(), seriesDetailsResponse.getSeriesDetails().getUrl(), Toast.LENGTH_SHORT).show();
+                    if (seriesDetailsResponse.getSeriesDetails() != null){
+                        if (seriesDetailsResponse.getSeriesDetails().getPictures() != null){
+                            loadImageSlider(seriesDetailsResponse.getSeriesDetails().getPictures());
+                        }
+                    }
                 }
         );
+    }
+
+    private void loadImageSlider(String[] sliderImages){
+        activitySeriesDetailsBinding.sliderViewPager.setOffscreenPageLimit(1);
+        activitySeriesDetailsBinding.sliderViewPager.setAdapter(new ImageSliderAdapter(sliderImages));
+        activitySeriesDetailsBinding.sliderViewPager.setVisibility(View.VISIBLE);
+        activitySeriesDetailsBinding.viewFadingEdge.setVisibility(View.VISIBLE);
     }
 }
