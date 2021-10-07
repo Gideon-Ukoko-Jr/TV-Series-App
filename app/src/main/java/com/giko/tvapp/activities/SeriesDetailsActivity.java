@@ -56,6 +56,7 @@ public class SeriesDetailsActivity extends AppCompatActivity {
                                 seriesDetailsResponse.getSeriesDetails().getImagePath()
                         );
                         activitySeriesDetailsBinding.imgSeries.setVisibility(View.VISIBLE);
+                        loadBasicSeriesDetails();
                     }
                 }
         );
@@ -108,5 +109,20 @@ public class SeriesDetailsActivity extends AppCompatActivity {
                 );
             }
         }
+    }
+
+    private void loadBasicSeriesDetails(){
+        activitySeriesDetailsBinding.setSeriesName(getIntent().getStringExtra("name"));
+        activitySeriesDetailsBinding.setNetworkCountry(
+                getIntent().getStringExtra("network") + " (" +
+                        getIntent().getStringExtra("country") + ")"
+        );
+        activitySeriesDetailsBinding.setStatus(getIntent().getStringExtra("status"));
+        activitySeriesDetailsBinding.setStartedDate(getIntent().getStringExtra("startDate"));
+
+        activitySeriesDetailsBinding.textName.setVisibility(View.VISIBLE);
+        activitySeriesDetailsBinding.textNetworkCountry.setVisibility(View.VISIBLE);
+        activitySeriesDetailsBinding.textStatus.setVisibility(View.VISIBLE);
+        activitySeriesDetailsBinding.textStarted.setVisibility(View.VISIBLE);
     }
 }
