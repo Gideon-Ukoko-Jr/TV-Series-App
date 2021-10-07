@@ -32,6 +32,12 @@ public class SeriesDetailsActivity extends AppCompatActivity {
 
     private void doInit(){
         seriesDetailsViewModel = new ViewModelProvider(this).get(SeriesDetailsViewModel.class);
+        activitySeriesDetailsBinding.imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         getSeriesDetails();
     }
 
@@ -46,6 +52,10 @@ public class SeriesDetailsActivity extends AppCompatActivity {
                         if (seriesDetailsResponse.getSeriesDetails().getPictures() != null){
                             loadImageSlider(seriesDetailsResponse.getSeriesDetails().getPictures());
                         }
+                        activitySeriesDetailsBinding.setSeriesImageURL(
+                                seriesDetailsResponse.getSeriesDetails().getImagePath()
+                        );
+                        activitySeriesDetailsBinding.imgSeries.setVisibility(View.VISIBLE);
                     }
                 }
         );

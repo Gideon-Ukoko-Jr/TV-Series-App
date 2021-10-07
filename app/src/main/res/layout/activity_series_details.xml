@@ -8,6 +8,26 @@
         <variable
             name="isLoading"
             type="Boolean" />
+        
+        <variable
+            name="seriesImageURL"
+            type="String" />
+
+        <variable
+            name="seriesName"
+            type="String" />
+
+        <variable
+            name="networkCountry"
+            type="String" />
+
+        <variable
+            name="status"
+            type="String" />
+
+        <variable
+            name="startedDate"
+            type="String" />
 
         <import type="android.view.View"/>
 
@@ -38,12 +58,109 @@
 
         <LinearLayout
             android:id="@+id/layoutSliderIndicators"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="end|center_vertical"
             android:orientation="horizontal"
             android:padding="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="@id/viewFadingEdge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgSeries"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/background_back_button"
+            android:padding="@dimen/_3sdp"
+            android:src="@drawable/ic_back_24"
+            app:tint="@color/color_text_icons"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imgSeries"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:imageURL="@{seriesImageURL}"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toBottomOf="@id/sliderViewPager"
+            app:layout_constraintBottom_toBottomOf="@id/sliderViewPager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:riv_corner_radius="@dimen/_6sdp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/textName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:text="@{seriesName}"
+            android:textColor="@color/color_text_icons"
+            android:fontFamily="@font/ubuntu_bold"
+            android:textSize="@dimen/_14ssp"
+            android:maxLines="1"
+            android:includeFontPadding="false"
+            android:ellipsize="end"
+            app:layout_constraintBaseline_toBottomOf="@id/sliderViewPager"
+            app:layout_constraintStart_toEndOf="@id/imgSeries"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/textNetworkCountry"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="@{networkCountry}"
+            android:textColor="@color/color_text_other"
+            android:fontFamily="@font/ubuntu_regular"
+            android:textSize="@dimen/_12ssp"
+            android:maxLines="1"
+            android:includeFontPadding="false"
+            android:ellipsize="end"
+            app:layout_constraintTop_toBottomOf="@id/textName"
+            app:layout_constraintStart_toStartOf="@id/textName"
+            app:layout_constraintEnd_toEndOf="@id/textName"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/textStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="@{status}"
+            android:textColor="@android:color/holo_green_light"
+            android:fontFamily="@font/ubuntu_regular"
+            android:textSize="@dimen/_12ssp"
+            android:maxLines="1"
+            android:includeFontPadding="false"
+            android:ellipsize="end"
+            app:layout_constraintTop_toBottomOf="@id/textNetworkCountry"
+            app:layout_constraintStart_toStartOf="@id/textName"
+            app:layout_constraintEnd_toEndOf="@id/textName"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/textStarted"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text='@{"Started on: " + startedDate}'
+            android:textColor="@color/color_text_secondary"
+            android:fontFamily="@font/ubuntu_regular"
+            android:textSize="@dimen/_12ssp"
+            android:maxLines="1"
+            android:includeFontPadding="false"
+            android:ellipsize="end"
+            app:layout_constraintTop_toBottomOf="@id/textStatus"
+            app:layout_constraintStart_toStartOf="@id/textName"
+            app:layout_constraintEnd_toEndOf="@id/textName"
             android:visibility="gone"/>
 
         <ProgressBar
