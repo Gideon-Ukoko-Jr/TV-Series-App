@@ -7,6 +7,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,6 +21,8 @@ import com.giko.tvapp.R;
 import com.giko.tvapp.adapters.ImageSliderAdapter;
 import com.giko.tvapp.databinding.ActivitySeriesDetailsBinding;
 import com.giko.tvapp.viewmodels.SeriesDetailsViewModel;
+
+import java.util.Locale;
 
 public class SeriesDetailsActivity extends AppCompatActivity {
 
@@ -82,6 +86,37 @@ public class SeriesDetailsActivity extends AppCompatActivity {
                                 }
                             }
                         });
+
+                        activitySeriesDetailsBinding.setRating(
+                                String.format(
+                                        Locale.getDefault(),
+                                        "%.2f",
+                                        Double.parseDouble(seriesDetailsResponse.getSeriesDetails().getRating())
+                                )
+                        );
+
+                        if (seriesDetailsResponse.getSeriesDetails().getGenres() != null){
+                            activitySeriesDetailsBinding.setGenre(seriesDetailsResponse.getSeriesDetails().getGenres()[0]);
+                        }else {
+                            activitySeriesDetailsBinding.setGenre("N/A");
+                        }
+                        activitySeriesDetailsBinding.setRuntime(seriesDetailsResponse.getSeriesDetails().getRuntime() + " Min");
+                        activitySeriesDetailsBinding.viewDivider1.setVisibility(View.VISIBLE);
+                        activitySeriesDetailsBinding.layoutMisc.setVisibility(View.VISIBLE);
+                        activitySeriesDetailsBinding.viewDivider2.setVisibility(View.VISIBLE);
+
+                        activitySeriesDetailsBinding.btnWebsite.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setData(Uri.parse(seriesDetailsResponse.getSeriesDetails().getUrl()));
+                                startActivity(intent);
+                            }
+                        });
+
+                        activitySeriesDetailsBinding.btnWebsite.setVisibility(View.VISIBLE);
+                        activitySeriesDetailsBinding.btnEpisodes.setVisibility(View.VISIBLE);
+
                         loadBasicSeriesDetails();
                     }
                 }
