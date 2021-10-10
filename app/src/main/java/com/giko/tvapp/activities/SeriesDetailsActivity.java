@@ -2,11 +2,13 @@ package com.giko.tvapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.text.HtmlCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -56,6 +58,30 @@ public class SeriesDetailsActivity extends AppCompatActivity {
                                 seriesDetailsResponse.getSeriesDetails().getImagePath()
                         );
                         activitySeriesDetailsBinding.imgSeries.setVisibility(View.VISIBLE);
+                        activitySeriesDetailsBinding.setDescription(
+                                String.valueOf(
+                                        HtmlCompat.fromHtml(
+                                                seriesDetailsResponse.getSeriesDetails().getDescription(),
+                                                HtmlCompat.FROM_HTML_MODE_LEGACY
+                                        )
+                                )
+                        );
+                        activitySeriesDetailsBinding.txtDescription.setVisibility(View.VISIBLE);
+                        activitySeriesDetailsBinding.txtReadMore.setVisibility(View.VISIBLE);
+                        activitySeriesDetailsBinding.txtReadMore.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (activitySeriesDetailsBinding.txtReadMore.getText().toString().equals("Read More")){
+                                    activitySeriesDetailsBinding.txtDescription.setMaxLines(Integer.MAX_VALUE);
+                                    activitySeriesDetailsBinding.txtDescription.setEllipsize(null);
+                                    activitySeriesDetailsBinding.txtReadMore.setText(R.string.read_less);
+                                }else {
+                                    activitySeriesDetailsBinding.txtDescription.setMaxLines(4);
+                                    activitySeriesDetailsBinding.txtDescription.setEllipsize(TextUtils.TruncateAt.END);
+                                    activitySeriesDetailsBinding.txtReadMore.setText(R.string.read_more);
+                                }
+                            }
+                        });
                         loadBasicSeriesDetails();
                     }
                 }
