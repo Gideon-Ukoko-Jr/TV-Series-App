@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="name"
+            type="String" />
+
+        <variable
+            name="airDate"
+            type="String" />
+
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:background="@drawable/tv_show_background"
+        android:padding="@dimen/_8sdp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{title}"
+            android:fontFamily="@font/ubuntu_bold"
+            android:textColor="@color/color_text_icons"
+            android:textSize="@dimen/_13ssp"
+            android:includeFontPadding="false"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:text="@{name}"
+            android:fontFamily="@font/ubuntu_medium"
+            android:textColor="@color/color_text_icons"
+            android:textSize="@dimen/_12ssp"
+            android:includeFontPadding="false"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:text='@{"Air Date: " + airDate}'
+            android:fontFamily="@font/ubuntu_regular"
+            android:textColor="@color/color_text_icons"
+            android:textSize="@dimen/_10ssp"
+            android:includeFontPadding="false"/>
+
+    </LinearLayout>
+</layout>

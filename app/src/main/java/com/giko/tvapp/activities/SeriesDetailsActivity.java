@@ -8,19 +8,26 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.giko.tvapp.R;
+import com.giko.tvapp.adapters.EpisodesAdapter;
 import com.giko.tvapp.adapters.ImageSliderAdapter;
 import com.giko.tvapp.databinding.ActivitySeriesDetailsBinding;
+import com.giko.tvapp.databinding.LayoutEpisodesBottomSheetBinding;
 import com.giko.tvapp.viewmodels.SeriesDetailsViewModel;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.Locale;
 
@@ -28,6 +35,8 @@ public class SeriesDetailsActivity extends AppCompatActivity {
 
     private ActivitySeriesDetailsBinding activitySeriesDetailsBinding;
     private SeriesDetailsViewModel seriesDetailsViewModel;
+    private BottomSheetDialog episodesBSD;
+    private LayoutEpisodesBottomSheetBinding layoutEpisodesBottomSheetBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +125,42 @@ public class SeriesDetailsActivity extends AppCompatActivity {
 
                         activitySeriesDetailsBinding.btnWebsite.setVisibility(View.VISIBLE);
                         activitySeriesDetailsBinding.btnEpisodes.setVisibility(View.VISIBLE);
+
+                        activitySeriesDetailsBinding.btnEpisodes.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (episodesBSD == null){
+                                    episodesBSD = new BottomSheetDialog(SeriesDetailsActivity.this);
+                                    layoutEpisodesBottomSheetBinding = DataBindingUtil.inflate(LayoutInflater.from(SeriesDetailsActivity.this),
+                                            R.layout.layout_episodes_bottom_sheet, findViewById(R.id.episodesContainer), false);
+                                    episodesBSD.setContentView(layoutEpisodesBottomSheetBinding.getRoot());
+                                    layoutEpisodesBottomSheetBinding.rvEpisodes.setAdapter(
+                                            new EpisodesAdapter(seriesDetailsResponse.getSeriesDetails().getEpisodes())
+                                    );
+                                    layoutEpisodesBottomSheetBinding.txtTitle.setText(
+                                            String.format("Episodes | %s", getIntent().getStringExtra("name"))
+                                    );
+                                    layoutEpisodesBottomSheetBinding.imgClose.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            episodesBSD.dismiss();
+                                        }
+                                    });
+                                }
+
+                                // Optional Section Start
+                                FrameLayout frameLayout = episodesBSD.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+
+                                if (frameLayout != null){
+                                    BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from(frameLayout);
+                                    bottomSheetBehavior.setPeekHeight(Resources.getSystem().getDisplayMetrics().heightPixels);
+                                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                                }
+
+                                // Optional Section End
+                                episodesBSD.show();
+                            }
+                        });
 
                         loadBasicSeriesDetails();
                     }
