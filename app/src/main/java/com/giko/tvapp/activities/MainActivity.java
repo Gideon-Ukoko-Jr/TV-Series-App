@@ -95,12 +95,15 @@ public class MainActivity extends AppCompatActivity implements SeriesListener {
     @Override
     public void onSeriesClicked(Series series) {
         Intent intent = new Intent(getApplicationContext(), SeriesDetailsActivity.class);
-        intent.putExtra("id", series.getId());
+
+        /* intent.putExtra("id", series.getId());
         intent.putExtra("name", series.getName());
         intent.putExtra("startDate", series.getStartDate());
         intent.putExtra("country", series.getCountry());
         intent.putExtra("network", series.getNetwork());
-        intent.putExtra("status", series.getStatus());
+        intent.putExtra("status", series.getStatus()); */
+
+        intent.putExtra("series", series);
         startActivity(intent);
     }
 }

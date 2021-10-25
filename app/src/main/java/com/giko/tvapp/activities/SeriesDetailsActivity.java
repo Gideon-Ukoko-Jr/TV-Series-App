@@ -25,11 +25,16 @@ import com.giko.tvapp.adapters.EpisodesAdapter;
 import com.giko.tvapp.adapters.ImageSliderAdapter;
 import com.giko.tvapp.databinding.ActivitySeriesDetailsBinding;
 import com.giko.tvapp.databinding.LayoutEpisodesBottomSheetBinding;
+import com.giko.tvapp.model.Series;
 import com.giko.tvapp.viewmodels.SeriesDetailsViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.Locale;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class SeriesDetailsActivity extends AppCompatActivity {
 
@@ -37,6 +42,7 @@ public class SeriesDetailsActivity extends AppCompatActivity {
     private SeriesDetailsViewModel seriesDetailsViewModel;
     private BottomSheetDialog episodesBSD;
     private LayoutEpisodesBottomSheetBinding layoutEpisodesBottomSheetBinding;
+    private Series series;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +59,14 @@ public class SeriesDetailsActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        series = (Series) getIntent().getSerializableExtra("series");
         getSeriesDetails();
     }
 
     private void getSeriesDetails(){
         activitySeriesDetailsBinding.setIsLoading(true);
 
-        String seriesId = String.valueOf(getIntent().getIntExtra("id", -1));
+        String seriesId = String.valueOf(series.getId());
         seriesDetailsViewModel.getSeriesDetails(seriesId).observe(
                 this, seriesDetailsResponse -> {
                     activitySeriesDetailsBinding.setIsLoading(false);
@@ -138,7 +145,7 @@ public class SeriesDetailsActivity extends AppCompatActivity {
                                             new EpisodesAdapter(seriesDetailsResponse.getSeriesDetails().getEpisodes())
                                     );
                                     layoutEpisodesBottomSheetBinding.txtTitle.setText(
-                                            String.format("Episodes | %s", getIntent().getStringExtra("name"))
+                                            String.format("Episodes | %s", series.getName())
                                     );
                                     layoutEpisodesBottomSheetBinding.imgClose.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -161,6 +168,22 @@ public class SeriesDetailsActivity extends AppCompatActivity {
                                 episodesBSD.show();
                             }
                         });
+
+                        activitySeriesDetailsBinding.imgAddToWatchList.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                new CompositeDisposable().add(seriesDetailsViewModel.addToWatchlist(series)
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(() -> {
+                                            activitySeriesDetailsBinding.imgAddToWatchList.setImageResource(R.drawable.ic_added);
+                                            Toast.makeText(getApplicationContext(), "Added To Watchlist", Toast.LENGTH_SHORT).show();
+                                        })
+                                );
+                            }
+                        });
+
+                        activitySeriesDetailsBinding.imgAddToWatchList.setVisibility(View.VISIBLE);
 
                         loadBasicSeriesDetails();
                     }
@@ -218,13 +241,13 @@ public class SeriesDetailsActivity extends AppCompatActivity {
     }
 
     private void loadBasicSeriesDetails(){
-        activitySeriesDetailsBinding.setSeriesName(getIntent().getStringExtra("name"));
+        activitySeriesDetailsBinding.setSeriesName(series.getName());
         activitySeriesDetailsBinding.setNetworkCountry(
-                getIntent().getStringExtra("network") + " (" +
-                        getIntent().getStringExtra("country") + ")"
+                series.getNetwork() + " (" +
+                        series.getCountry() + ")"
         );
-        activitySeriesDetailsBinding.setStatus(getIntent().getStringExtra("status"));
-        activitySeriesDetailsBinding.setStartedDate(getIntent().getStringExtra("startDate"));
+        activitySeriesDetailsBinding.setStatus(series.getStatus());
+        activitySeriesDetailsBinding.setStartedDate(series.getStartDate());
 
         activitySeriesDetailsBinding.textName.setVisibility(View.VISIBLE);
         activitySeriesDetailsBinding.textNetworkCountry.setVisibility(View.VISIBLE);
