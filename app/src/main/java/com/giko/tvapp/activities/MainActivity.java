@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.View;
 
 import com.giko.tvapp.R;
 import com.giko.tvapp.adapters.SeriesAdapter;
@@ -55,6 +55,12 @@ public class MainActivity extends AppCompatActivity implements SeriesListener {
                         getMostPopularSeries();
                     }
                 }
+            }
+        });
+        activityMainBinding.imgWatchList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), WatchListActivity.class));
             }
         });
         getMostPopularSeries();
