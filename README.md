@@ -3,14 +3,8 @@ This is an android app which allows the user to check out the details(Cast, Syno
 
 <img src = "demo_screens/Screenshot_20211028-165334.png" height = 500>
 
-<br>
-
 <img src = "demo_screens/Screenshot_20211028-165343.png" height = 500>
 
-<br>
-
 <img src = "demo_screens/Screenshot_20211028-165353.png" height = 500>
-
-<br>
 
 <img src = "demo_screens/Screenshot_20211028-165406.png" height = 500>
