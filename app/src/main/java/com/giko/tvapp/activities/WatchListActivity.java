@@ -82,6 +82,15 @@ public class WatchListActivity extends AppCompatActivity implements WatchlistLis
 
     @Override
     public void removeSeriesFromWatchlist(Series series, int position) {
-
+        CompositeDisposable compositeDisposable = new CompositeDisposable();
+        compositeDisposable.add(watchlistViewModel.removeSeriesFromWatchlist(series)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                    watchlist.remove(position);
+                    watchlistAdapter.notifyItemRemoved(position);
+                    watchlistAdapter.notifyItemChanged(position, watchlistAdapter.getItemCount());
+                    compositeDisposable.dispose();
+                }));
     }
 }
