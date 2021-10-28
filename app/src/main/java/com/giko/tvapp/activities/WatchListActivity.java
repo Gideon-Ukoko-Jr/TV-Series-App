@@ -13,6 +13,7 @@ import com.giko.tvapp.adapters.WatchlistAdapter;
 import com.giko.tvapp.databinding.ActivityWatchListBinding;
 import com.giko.tvapp.listeners.WatchlistListener;
 import com.giko.tvapp.model.Series;
+import com.giko.tvapp.utilities.TempDataHolder;
 import com.giko.tvapp.viewmodels.WatchlistViewModel;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class WatchListActivity extends AppCompatActivity implements WatchlistLis
         });
 
         watchlist = new ArrayList<>();
+        loadWatchlist();
     }
 
     private void loadWatchlist(){
@@ -70,7 +72,11 @@ public class WatchListActivity extends AppCompatActivity implements WatchlistLis
     @Override
     protected void onResume() {
         super.onResume();
-        loadWatchlist();
+
+        if (TempDataHolder.IS_WATCHLIST_UPDATE){
+            loadWatchlist();
+            TempDataHolder.IS_WATCHLIST_UPDATE = false;
+        }
     }
 
     @Override

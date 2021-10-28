@@ -13,6 +13,7 @@ import com.giko.tvapp.repositories.SeriesDetailsRepository;
 import com.giko.tvapp.responses.SeriesDetailsResponse;
 
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 
 public class SeriesDetailsViewModel extends AndroidViewModel {
 
@@ -31,5 +32,13 @@ public class SeriesDetailsViewModel extends AndroidViewModel {
 
     public Completable addToWatchlist(Series series){
         return seriesDatabase.seriesDao().addToWatchList(series);
+    }
+
+    public Flowable<Series> getSeriesFromWatchlist(String seriesId){
+        return seriesDatabase.seriesDao().getSeriesFromWatchList(seriesId);
+    }
+
+    public Completable removeSeriesFromWatchlist(Series series){
+        return seriesDatabase.seriesDao().removeFromWatchList(series);
     }
 }

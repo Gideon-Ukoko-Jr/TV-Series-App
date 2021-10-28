@@ -25,4 +25,7 @@ public interface SeriesDao {
     @Delete
     Completable removeFromWatchList(Series series);
 
+    @Query("SELECT * FROM series WHERE id = :seriesId")
+    Flowable<Series> getSeriesFromWatchList(String seriesId);
+
 }
