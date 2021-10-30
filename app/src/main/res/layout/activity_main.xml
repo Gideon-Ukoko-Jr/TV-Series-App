@@ -38,7 +38,7 @@
                 android:layout_weight="1"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:text="@string/tv_shows_most_popular"
+                android:text="@string/series_most_popular"
                 android:textColor="@color/color_text_icons"
                 android:textSize="@dimen/_14ssp"
                 android:fontFamily="@font/ubuntu_bold"

@@ -14,4 +14,7 @@ public interface ApiService {
 
     @GET("show-details")
     Call<SeriesDetailsResponse> getSeriesDetails(@Query("q") String seriesId);
+
+    @GET("search")
+    Call<SeriesResponse> searchSeries(@Query("q")String query, @Query("page") int page);
 }

@@ -67,12 +67,21 @@ public class MainActivity extends AppCompatActivity implements SeriesListener {
                 }
             }
         });
+
         activityMainBinding.imgWatchList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), WatchListActivity.class));
             }
         });
+
+        activityMainBinding.imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+            }
+        });
+
         getMostPopularSeries();
     }
 
