@@ -1,6 +1,7 @@
 # TV-Series-App
 
 [PlayStore Link](https://play.google.com/store/apps/details?id=com.giko.tvapp)
+<br>
 This is an android app which allows the user to check out the details(Cast, Synopsis, Runtime, Status) of their favorite or prospective series. It also allows the user to see the ratings and rankings of the series.
 
 <img src = "demo_screens/Screenshot_20211028-165334.png" height = 500>
